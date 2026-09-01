@@ -1,0 +1,96 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  TUTOR
+  STUDENT
+}
+
+enum SessionStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  AI_REVIEWED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         Role
+  name         String
+  createdAt    DateTime @default(now())
+
+  // If role = TUTOR
+  students        StudentProfile[] @relation("TutorStudents")
+  sessionsAsTutor Session[]        @relation("TutorSessions")
+
+  // If role = STUDENT
+  profile           StudentProfile? @relation("StudentProfile")
+  sessionsAsStudent Session[]       @relation("StudentSessions")
+
+  @@index([email])
+}
+
+model StudentProfile {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user          User     @relation("StudentProfile", fields: [userId], references: [id], onDelete: Cascade)
+  tutorId       String
+  tutor         User     @relation("TutorStudents", fields: [tutorId], references: [id], onDelete: Cascade)
+  subject       String
+  currentLevel  String
+  learningGoals String   @db.Text
+  weakAreas     String   @db.Text
+  createdAt     DateTime @default(now())
+
+  @@index([tutorId])
+}
+
+model Session {
+  id           String        @id @default(cuid())
+  tutorId      String
+  tutor        User          @relation("TutorSessions", fields: [tutorId], references: [id], onDelete: Cascade)
+  studentId    String
+  student      User          @relation("StudentSessions", fields: [studentId], references: [id], onDelete: Cascade)
+  scheduledAt  DateTime
+  durationMins Int           @default(60)
+  topic        String
+  status       SessionStatus @default(SCHEDULED)
+  notes        String?       @db.Text
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  plan    SessionPlan?
+  debrief SessionDebrief?
+
+  @@index([tutorId, scheduledAt])   // Powers the double-booking check
+  @@index([studentId, scheduledAt]) // Powers the student progress timeline
+}
+
+model SessionPlan {
+  id                String   @id @default(cuid())
+  sessionId         String   @unique
+  session           Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  objectives        Json     // string[]
+  lessonOutline     Json     // string[4]
+  practiceQuestions Json     // string[3]
+  generatedAt       DateTime @default(now())
+}
+
+model SessionDebrief {
+  id          String   @id @default(cuid())
+  sessionId   String   @unique
+  session     Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  summary     String   @db.Text
+  homework    Json     // string[2-3]
+  nextFocus   String   @db.Text
+  generatedAt DateTime @default(now())
+}

@@ -1,0 +1,83 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         String   // TUTOR or STUDENT
+  name         String
+  createdAt    DateTime @default(now())
+
+  // Tutor relations
+  students        StudentProfile[] @relation("TutorStudents")
+  sessionsAsTutor Session[]        @relation("TutorSessions")
+
+  // Student relations
+  profile           StudentProfile? @relation("StudentProfile")
+  sessionsAsStudent Session[]       @relation("StudentSessions")
+
+  @@index([email])
+}
+
+model StudentProfile {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  user          User     @relation("StudentProfile", fields: [userId], references: [id], onDelete: Cascade)
+  tutorId       String
+  tutor         User     @relation("TutorStudents", fields: [tutorId], references: [id], onDelete: Cascade)
+  subject       String
+  currentLevel  String
+  learningGoals String
+  weakAreas     String
+  createdAt     DateTime @default(now())
+
+  @@index([tutorId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  tutorId      String
+  tutor        User     @relation("TutorSessions", fields: [tutorId], references: [id], onDelete: Cascade)
+  studentId    String
+  student      User     @relation("StudentSessions", fields: [studentId], references: [id], onDelete: Cascade)
+  scheduledAt  DateTime
+  durationMins Int      @default(60)
+  topic        String
+  status       String   @default("SCHEDULED") // SCHEDULED, IN_PROGRESS, COMPLETED, AI_REVIEWED
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  plan    SessionPlan?
+  debrief SessionDebrief?
+
+  @@index([tutorId, scheduledAt])
+  @@index([studentId, scheduledAt])
+}
+
+model SessionPlan {
+  id                String   @id @default(cuid())
+  sessionId         String   @unique
+  session           Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  objectives        String   // JSON stringified string[]
+  lessonOutline     String   // JSON stringified string[]
+  practiceQuestions String   // JSON stringified string[]
+  generatedAt       DateTime @default(now())
+}
+
+model SessionDebrief {
+  id          String   @id @default(cuid())
+  sessionId   String   @unique
+  session     Session  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  summary     String
+  homework    String   // JSON stringified string[]
+  nextFocus   String
+  generatedAt DateTime @default(now())
+}
