@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma generate --schema=prisma/schema.sqlite.prisma && next build",
+    "build:pg": "prisma generate --schema=prisma/schema.prisma && next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts",
-    "test:api": "ts-node --compiler-options {\"module\":\"CommonJS\"} scripts/test-api.ts"
+    "seed": "ts-node prisma/seed.ts",
+    "test:auth": "ts-node scripts/test-day2-auth.ts"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
