@@ -9,6 +9,8 @@
     "build:pg": "prisma generate --schema=prisma/schema.prisma && next build",
     "start": "next start",
     "lint": "next lint",
+    "studio": "prisma studio --schema=prisma/schema.sqlite.prisma",
+    "studio:pg": "prisma studio --schema=prisma/schema.prisma",
     "seed": "ts-node prisma/seed.ts",
     "test:auth": "ts-node scripts/test-day2-auth.ts",
     "test:state-ai": "ts-node scripts/test-day3-state-ai.ts"

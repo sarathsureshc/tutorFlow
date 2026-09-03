@@ -7,13 +7,15 @@
 
 ## 1. Quick Start & Test Credentials
 
-### Demo Accounts (Pre-seeded with Rich Historical Data)
+### Demo Accounts (Pre-seeded with Rich Historical CBSE & Kerala Board Data)
 | Role | Email | Password | Persona & Subject |
 |---|---|---|---|
-| **Primary Tutor** | `tutor@tutorflow.com` | `password123` | **Dr. Sarah Jenkins** (Manages 4 active students: Calculus, SAT, Physics, Chemistry) |
-| **Secondary Tutor** | `tutor2@tutorflow.com` | `password123` | **Prof. Marcus Vance** (Linear Algebra — Used for multi-tenant isolation testing) |
-| **Student 1** | `alex.rivera@example.com` | `password123` | **Alex Rivera** (AP Calculus BC — Has 4 historical & in-progress sessions) |
-| **Student 2** | `maya.lin@example.com` | `password123` | **Maya Lin** (SAT Reading & Writing — Has debriefed sessions & homework) |
+| **Primary Tutor** | `tutor@tutorflow.com` | `password123` | **Dr. Ananya Nair** (CBSE Class 12 Maths, Kerala DHSE Physics, Chemistry, Biology) |
+| **Secondary Tutor** | `tutor2@tutorflow.com` | `password123` | **Prof. Rajesh Menon** (CBSE Class 11 Physics — Used for multi-tenant isolation testing) |
+| **Student 1** | `aditya.varma@example.com` | `password123` | **Aditya Varma** (CBSE Class 12 Maths — Has 4 historical & in-progress sessions) |
+| **Student 2** | `meera.nambiar@example.com` | `password123` | **Meera Nambiar** (Kerala DHSE Plus Two Physics — Has debriefed sessions & homework) |
+| **Student 3** | `rohan.pillai@example.com` | `password123` | **Rohan Pillai** (CBSE Class 12 Chemistry — NEET Aspirant) |
+| **Student 4** | `sneha.kurian@example.com` | `password123` | **Sneha Kurian** (Kerala SSLC Class 10 Biology) |
 
 > 💡 *The `/login` page includes **1-Click Fill Buttons** for instant evaluation without typing credentials.*
 

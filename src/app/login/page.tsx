@@ -149,7 +149,7 @@ function LoginForm() {
             <div>
               <div className="font-medium text-foreground flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                Dr. Sarah Jenkins (Primary Tutor)
+                Dr. Ananya Nair (Primary Tutor — CBSE & Kerala Board)
               </div>
               <div className="text-muted-foreground text-[11px]">tutor@tutorflow.com · password123</div>
             </div>
@@ -160,17 +160,34 @@ function LoginForm() {
 
           <button
             type="button"
-            onClick={() => selectDemoAccount("alex.rivera@example.com")}
+            onClick={() => selectDemoAccount("aditya.varma@example.com")}
             className="flex items-center justify-between p-2.5 rounded-lg border border-border/50 bg-secondary/40 hover:bg-secondary hover:border-blue-500/30 text-left transition-all text-xs group"
           >
             <div>
               <div className="font-medium text-foreground flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-blue-400" />
-                Alex Rivera (Student - Calculus BC)
+                Aditya Varma (Student — CBSE Class 12 Maths)
               </div>
-              <div className="text-muted-foreground text-[11px]">alex.rivera@example.com · password123</div>
+              <div className="text-muted-foreground text-[11px]">aditya.varma@example.com · password123</div>
             </div>
             <span className="text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity font-medium">
+              Select
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => selectDemoAccount("meera.nambiar@example.com")}
+            className="flex items-center justify-between p-2.5 rounded-lg border border-border/50 bg-secondary/40 hover:bg-secondary hover:border-teal-500/30 text-left transition-all text-xs group"
+          >
+            <div>
+              <div className="font-medium text-foreground flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-teal-400" />
+                Meera Nambiar (Student — Kerala DHSE Plus Two Physics)
+              </div>
+              <div className="text-muted-foreground text-[11px]">meera.nambiar@example.com · password123</div>
+            </div>
+            <span className="text-teal-400 opacity-0 group-hover:opacity-100 transition-opacity font-medium">
               Select
             </span>
           </button>
@@ -183,7 +200,7 @@ function LoginForm() {
             <div>
               <div className="font-medium text-foreground flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-purple-400" />
-                Prof. Marcus Vance (Secondary Tutor)
+                Prof. Rajesh Menon (Secondary Tutor — Isolation Check)
               </div>
               <div className="text-muted-foreground text-[11px]">tutor2@tutorflow.com · password123</div>
             </div>
