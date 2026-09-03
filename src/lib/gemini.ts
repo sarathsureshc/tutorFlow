@@ -76,7 +76,7 @@ export async function generateSessionPlan(params: {
 
   return callGeminiWithRetry(async () => {
     const model = genAI!.getGenerativeModel({
-      model: "gemini-2.0-flash",
+      model: "gemini-3.6-flash",
       generationConfig: {
         responseMimeType: "application/json",
         responseSchema: {
@@ -166,7 +166,7 @@ export async function generateSessionDebrief(params: {
 
   return callGeminiWithRetry(async () => {
     const model = genAI!.getGenerativeModel({
-      model: "gemini-2.0-flash",
+      model: "gemini-3.6-flash",
       generationConfig: {
         responseMimeType: "application/json",
         responseSchema: {
@@ -254,7 +254,7 @@ export async function generateProgressSummary(params: {
 
   return callGeminiWithRetry(async () => {
     const model = genAI!.getGenerativeModel({
-      model: "gemini-2.0-flash",
+      model: "gemini-3.6-flash",
       generationConfig: {
         responseMimeType: "application/json",
         responseSchema: {
