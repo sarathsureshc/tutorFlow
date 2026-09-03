@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth";
 import { formatTime } from "@/lib/utils";
+import { sendSessionScheduledEmail } from "@/lib/email";
 
 export const dynamic = "force-dynamic";
 
@@ -192,10 +193,20 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    // Bonus: Dispatch Email Notification
+    sendSessionScheduledEmail({
+      studentEmail: session.student.email,
+      studentName: session.student.name,
+      tutorName: tutor.name,
+      topic: session.topic,
+      scheduledAt: session.scheduledAt,
+      durationMins: session.durationMins,
+    }).catch((e) => console.warn("Email dispatch error:", e));
+
     return NextResponse.json({
       success: true,
       data: session,
-      message: "Session scheduled successfully.",
+      message: "Session scheduled successfully. Email notification dispatched.",
     });
   } catch (error: any) {
     if (error.status) {
