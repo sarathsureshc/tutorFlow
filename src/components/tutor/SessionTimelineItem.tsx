@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ChevronDown, ChevronUp, Calendar, Clock, BookOpen, Sparkles, ArrowRight, Play, CheckCircle2 } from "lucide-react";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { Button } from "@/components/ui/button";
-import { formatDate } from "@/lib/utils";
+import { formatDate, parseArrayField } from "@/lib/utils";
 import { SessionDTO } from "@/types";
 
 interface SessionTimelineItemProps {
@@ -99,7 +99,7 @@ export function SessionTimelineItem({ session, isLast = false }: SessionTimeline
                 <p className="text-xs leading-relaxed mb-2">{session.debrief.summary}</p>
                 <div className="font-semibold text-foreground text-[11px] mb-0.5">Assigned Homework:</div>
                 <ul className="list-disc list-inside space-y-0.5 text-muted-foreground">
-                  {session.debrief.homework.map((hw, i) => (
+                  {parseArrayField(session.debrief.homework).map((hw, i) => (
                     <li key={i}>{hw}</li>
                   ))}
                 </ul>
@@ -115,7 +115,7 @@ export function SessionTimelineItem({ session, isLast = false }: SessionTimeline
                   <BookOpen className="w-3.5 h-3.5" /> AI Lesson Plan Objectives
                 </div>
                 <ul className="list-disc list-inside space-y-0.5 text-xs text-muted-foreground">
-                  {session.plan.objectives.map((obj, i) => (
+                  {parseArrayField(session.plan.objectives).map((obj, i) => (
                     <li key={i}>{obj}</li>
                   ))}
                 </ul>

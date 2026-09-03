@@ -34,3 +34,27 @@ export function formatTime(date: string | Date | number): string {
     hour12: true,
   }).format(d);
 }
+
+export function parseArrayField(val: any): string[] {
+  if (!val) return [];
+  if (Array.isArray(val)) return val;
+  if (typeof val === "string") {
+    try {
+      const parsed = JSON.parse(val);
+      if (Array.isArray(parsed)) return parsed;
+      if (typeof parsed === "string") {
+        // In case of double stringification
+        try {
+          const secondParse = JSON.parse(parsed);
+          if (Array.isArray(secondParse)) return secondParse;
+        } catch {}
+        return [parsed];
+      }
+      return [String(parsed)];
+    } catch {
+      return [val];
+    }
+  }
+  return [];
+}
+

@@ -22,7 +22,7 @@ import {
   FileText,
 } from "lucide-react";
 import { SessionDTO, StudentProfileDTO } from "@/types";
-import { formatDate } from "@/lib/utils";
+import { formatDate, parseArrayField } from "@/lib/utils";
 
 export default function StudentDashboardPage() {
   const [user, setUser] = useState<any>(null);
@@ -212,7 +212,7 @@ export default function StudentDashboardPage() {
                             <div>
                               <span className="font-bold text-foreground block mb-1">Assigned Homework:</span>
                               <ul className="list-disc list-inside space-y-0.5 text-muted-foreground">
-                                {sess.debrief.homework.map((hw, i) => (
+                                {parseArrayField(sess.debrief.homework).map((hw, i) => (
                                   <li key={i} className="text-foreground">{hw}</li>
                                 ))}
                               </ul>

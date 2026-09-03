@@ -27,7 +27,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { SessionDTO, SessionStatus } from "@/types";
-import { formatDate, formatTime } from "@/lib/utils";
+import { formatDate, formatTime, parseArrayField } from "@/lib/utils";
 import { useDebouncedCallback } from "use-debounce";
 
 export default function SessionRoomPage() {
@@ -344,7 +344,7 @@ export default function SessionRoomPage() {
                             <Target className="w-4 h-4" /> Targeted Pedagogical Objectives
                           </span>
                           <ul className="space-y-1.5 list-disc list-inside text-muted-foreground">
-                            {session.plan.objectives.map((obj, i) => (
+                            {parseArrayField(session.plan.objectives).map((obj, i) => (
                               <li key={i} className="text-foreground">{obj}</li>
                             ))}
                           </ul>
@@ -356,7 +356,7 @@ export default function SessionRoomPage() {
                             <Clock className="w-4 h-4 text-primary" /> Timestamped Lesson Outline
                           </span>
                           <div className="space-y-2">
-                            {session.plan.lessonOutline.map((item, i) => (
+                            {parseArrayField(session.plan.lessonOutline).map((item, i) => (
                               <div key={i} className="p-2 rounded-lg bg-background/60 border border-border/40 text-muted-foreground">
                                 {item}
                               </div>
@@ -370,7 +370,7 @@ export default function SessionRoomPage() {
                             <GraduationCap className="w-4 h-4 text-emerald-400" /> Grounded Practice Questions
                           </span>
                           <ol className="space-y-2 list-decimal list-inside text-muted-foreground">
-                            {session.plan.practiceQuestions.map((q, i) => (
+                            {parseArrayField(session.plan.practiceQuestions).map((q, i) => (
                               <li key={i} className="p-2 rounded-lg bg-background/60 border border-border/40 text-foreground">
                                 {q}
                               </li>
@@ -501,7 +501,7 @@ export default function SessionRoomPage() {
                       <div className="p-3 rounded-xl bg-background/60 border border-border/40">
                         <span className="font-bold text-foreground block mb-1.5">Assigned Homework:</span>
                         <ul className="space-y-1 list-disc list-inside text-muted-foreground">
-                          {session.debrief.homework.map((hw, i) => (
+                          {parseArrayField(session.debrief.homework).map((hw, i) => (
                             <li key={i} className="text-foreground">{hw}</li>
                           ))}
                         </ul>

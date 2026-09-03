@@ -20,7 +20,7 @@ import {
   Target,
 } from "lucide-react";
 import { SessionDTO } from "@/types";
-import { formatDate } from "@/lib/utils";
+import { formatDate, parseArrayField } from "@/lib/utils";
 
 export default function StudentSessionDetailPage() {
   const params = useParams();
@@ -114,17 +114,17 @@ export default function StudentSessionDetailPage() {
                   <div>
                     <span className="font-bold text-foreground block mb-1.5">Objectives:</span>
                     <ul className="space-y-1 list-disc list-inside text-muted-foreground">
-                      {session.plan.objectives.map((obj, i) => (
+                      {parseArrayField(session.plan.objectives).map((obj, i) => (
                         <li key={i} className="text-foreground">{obj}</li>
                       ))}
                     </ul>
                   </div>
 
-                  {session.plan.practiceQuestions && session.plan.practiceQuestions.length > 0 && (
+                  {parseArrayField(session.plan.practiceQuestions).length > 0 && (
                     <div>
                       <span className="font-bold text-foreground block mb-1.5">Practice Problems:</span>
                       <ol className="space-y-2 list-decimal list-inside text-muted-foreground">
-                        {session.plan.practiceQuestions.map((q, i) => (
+                        {parseArrayField(session.plan.practiceQuestions).map((q, i) => (
                           <li key={i} className="p-2 rounded-lg bg-secondary/40 border border-border/40 text-foreground">
                             {q}
                           </li>
@@ -169,7 +169,7 @@ export default function StudentSessionDetailPage() {
                   <div className="p-3.5 rounded-xl bg-background/60 border border-border/40">
                     <span className="font-bold text-foreground block mb-1.5">Assigned Homework:</span>
                     <ul className="space-y-1 list-disc list-inside text-muted-foreground">
-                      {session.debrief.homework.map((hw, i) => (
+                      {parseArrayField(session.debrief.homework).map((hw, i) => (
                         <li key={i} className="text-foreground">{hw}</li>
                       ))}
                     </ul>
