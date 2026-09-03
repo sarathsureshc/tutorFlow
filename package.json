@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "ts-node prisma/seed.ts",
-    "test:auth": "ts-node scripts/test-day2-auth.ts"
+    "test:auth": "ts-node scripts/test-day2-auth.ts",
+    "test:state-ai": "ts-node scripts/test-day3-state-ai.ts"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
