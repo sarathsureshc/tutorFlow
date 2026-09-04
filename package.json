@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate --schema=prisma/schema.prisma && next build",
+    "build:local": "next build",
     "db:generate": "prisma generate --schema=prisma/schema.sqlite.prisma",
-    "build:pg": "prisma generate --schema=prisma/schema.prisma && next build",
+    "db:push:pg": "prisma db push --schema=prisma/schema.prisma",
     "start": "next start",
     "lint": "next lint",
     "studio": "prisma studio --schema=prisma/schema.sqlite.prisma",
@@ -37,6 +38,7 @@
     "use-debounce": "^10.0.4"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.15.13",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^20.17.6",

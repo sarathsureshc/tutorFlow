@@ -21,7 +21,24 @@
 
 ---
 
-## 2. Relational Data Model & Architecture Diagram
+## 2. Production Deployment (Netlify + Supabase)
+
+TutorFlow is configured for 1-click zero-config deployment on Netlify:
+1. **Repository**: Import [`https://github.com/sarathsureshc/tutorFlow.git`](https://github.com/sarathsureshc/tutorFlow.git) into Netlify.
+2. **Build Settings** (Auto-detected via `netlify.toml`):
+   - **Build command:** `npm run build` (runs `prisma generate --schema=prisma/schema.prisma && next build`)
+   - **Publish directory:** `.next`
+   - **Plugin:** `@netlify/plugin-nextjs`
+3. **Environment Variables** (Add in Netlify Dashboard $\rightarrow$ **Site configuration** $\rightarrow$ **Environment variables**):
+   - `DATABASE_URL`: `postgresql://postgres.koxxlvfvedoftuwpxmxk:796346%40Sarath@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true`
+   - `DIRECT_URL`: `postgresql://postgres.koxxlvfvedoftuwpxmxk:796346%40Sarath@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres`
+   - `JWT_SECRET`: `tutorflow_super_secret_production_key_2026_minimum_32_chars_long!`
+   - `GEMINI_API_KEY`: `<your_gemini_api_key_from_google_ai_studio>`
+   - `NODE_ENV`: `production`
+
+---
+
+## 3. Relational Data Model & Architecture Diagram
 
 ```mermaid
 erDiagram
