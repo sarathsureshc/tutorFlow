@@ -75,13 +75,6 @@ export default function HomePage() {
           </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-border/60 py-6 text-center text-xs text-muted-foreground">
-        <div className="container mx-auto px-4">
-          TutorFlow · Built for Senior Full-Stack Engineering Showcase · PostgreSQL + Prisma + Gemini 2.5 Flash
-        </div>
-      </footer>
     </div>
   );
 }
