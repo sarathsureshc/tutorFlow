@@ -227,17 +227,11 @@ TutorFlow integrates **Google Gemini 2.5 Flash** using strict `responseSchema` (
 
 ---
 
-## 6. Verification Test Suite
+## 6. Verification & Production Build Check
 
-Run the automated test suites in the terminal:
+Verify production compilation and type checks:
 ```bash
-# Day 2 Auth, RBAC & Multi-Tenant Isolation Tests (13 tests)
-npm run test:auth
-
-# Day 3 State Machine, Double-Booking & Structured AI Tests (28 tests)
-npm run test:state-ai
-
-# Full Production Build Check
+# Full Production Build Check (Prisma Client + Next.js App Router)
 npm run build
 ```
 
