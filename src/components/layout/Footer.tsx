@@ -6,10 +6,10 @@ export function Footer() {
   return (
     <footer className="w-full border-t border-border/50 bg-background/60 backdrop-blur-sm mt-auto">
       <div className="container mx-auto px-4 sm:px-8 py-8">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-muted-foreground text-center lg:text-left">
           {/* Brand & Copyright */}
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-sm">
+          <div className="flex items-center gap-2 whitespace-nowrap">
+            <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-sm flex-shrink-0">
               <Sparkles className="w-3.5 h-3.5" />
             </div>
             <span className="font-semibold text-foreground">TutorFlow</span>
@@ -17,13 +17,13 @@ export function Footer() {
           </div>
 
           {/* Operational Status indicator */}
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-medium">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-medium whitespace-nowrap">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
             All Systems Operational · Supabase PostgreSQL + Gemini 2.5 Flash
           </div>
 
           {/* Links */}
-          <div className="flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-4 text-xs whitespace-nowrap">
             <Link href="/terms" className="hover:text-foreground transition-colors">
               Terms of Service
             </Link>
