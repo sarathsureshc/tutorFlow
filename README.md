@@ -251,10 +251,10 @@ npm run build
 
 ---
 
-## 8. What I'd Build Next (Product & Engineering Roadmap)
+## 8. One Last Thing: What I Would Build Next (5 Sentences)
 
-1. **Streaming AI Responses**: Implement server-sent events (SSE) for the Pre-Session Plan generator to stream objective generation in real-time.
-2. **Automated Session Reminders via Email/SMS**: Integrate Resend or Twilio to send automated 24-hour reminders and post-session homework digests to students and parents.
-3. **Interactive Homework Submission & AI Auto-Grading**: Allow students to submit photos or LaTeX of homework exercises directly into the student hub, with automated initial feedback against the tutor's debrief rubric.
-4. **Tutor Practice Question Bank with Spaced Repetition**: Extract all generated practice questions into a searchable library tagged by weak areas, automatically serving them in future warm-ups.
-5. **Cross-Student Mastery Analytics**: A high-level tutor dashboard visualizing concept mastery heatmaps across the tutor's entire student roster.
+1. If I had another day, I would first implement Server-Sent Events (SSE) to stream Gemini's pre-session lesson plan in real-time, reducing perceived tutor wait times to under 300 milliseconds.
+2. Next, I would build an interactive student homework submission interface where students can upload written solutions or LaTeX derivations directly into their hub for automated diagnostic pre-checks against the tutor's debrief rubric.
+3. Third, I would introduce an automated spaced repetition question bank that automatically extracts practice problems and serves them as warm-up drills in future sessions whenever a student's weak areas persist.
+4. Fourth, I would develop multi-student mastery analytics with visual heatmaps to give tutors high-level insights into curriculum bottlenecks across their entire active roster.
+5. Finally, I would expand our email engine into a two-way WhatsApp and SMS notification workflow to deliver instant session reminders and post-lesson homework digests directly to both students and parents.
