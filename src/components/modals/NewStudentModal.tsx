@@ -12,10 +12,19 @@ interface NewStudentModalProps {
   onStudentCreated: () => void;
 }
 
+function generateSecurePassword(): string {
+  const chars = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let result = "Tutor_";
+  for (let i = 0; i < 8; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result + "!";
+}
+
 export function NewStudentModal({ isOpen, onClose, onStudentCreated }: NewStudentModalProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("password123");
+  const [password, setPassword] = useState(generateSecurePassword);
   const [subject, setSubject] = useState("");
   const [currentLevel, setCurrentLevel] = useState("");
   const [learningGoals, setLearningGoals] = useState("");
@@ -113,6 +122,32 @@ export function NewStudentModal({ isOpen, onClose, onStudentCreated }: NewStuden
                 required
               />
             </div>
+          </div>
+
+          <div className="space-y-1">
+            <div className="flex items-center justify-between">
+              <label className="font-medium text-muted-foreground flex items-center gap-1">
+                Temporary Password (min. 8 characters)
+              </label>
+              <button
+                type="button"
+                onClick={() => setPassword(generateSecurePassword())}
+                className="text-primary hover:underline text-[11px]"
+              >
+                Regenerate Secure Key
+              </button>
+            </div>
+            <Input
+              type="text"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              minLength={8}
+              required
+              className="font-mono text-xs"
+            />
+            <p className="text-[10px] text-muted-foreground">
+              Provide this temporary password to your student so they can sign in.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

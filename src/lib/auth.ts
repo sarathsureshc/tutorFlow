@@ -4,8 +4,15 @@ import { NextRequest, NextResponse } from "next/server";
 import { JWTPayload, Role, AuthenticatedUser } from "@/types";
 import { COOKIE_NAME, COOKIE_MAX_AGE } from "./constants";
 
-const JWT_SECRET = process.env.JWT_SECRET || "tutorflow_super_secret_production_key_2026_minimum_32_chars_long!";
-const secretKey = new TextEncoder().encode(JWT_SECRET);
+function getJwtSecretKey(): Uint8Array {
+  const secret = process.env.JWT_SECRET;
+  if (!secret || secret.length < 32) {
+    throw new Error(
+      "FATAL SECURITY ERROR: JWT_SECRET environment variable is missing or shorter than 32 characters. A strong secret is required."
+    );
+  }
+  return new TextEncoder().encode(secret);
+}
 
 /**
  * Sign a JWT with payload { sub, role, email, name }
@@ -25,7 +32,7 @@ export async function signToken(payload: {
     .setSubject(payload.sub)
     .setIssuedAt()
     .setExpirationTime("7d")
-    .sign(secretKey);
+    .sign(getJwtSecretKey());
 }
 
 /**
@@ -33,7 +40,7 @@ export async function signToken(payload: {
  */
 export async function verifyToken(token: string): Promise<JWTPayload | null> {
   try {
-    const { payload } = await jwtVerify(token, secretKey);
+    const { payload } = await jwtVerify(token, getJwtSecretKey());
     return {
       sub: payload.sub as string,
       role: payload.role as Role,

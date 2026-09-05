@@ -3,9 +3,32 @@ import * as bcrypt from "bcryptjs";
 import prisma from "@/lib/prisma";
 import { signToken, setAuthCookie } from "@/lib/auth";
 import { Role } from "@/types";
+import { getClientIp, checkRateLimit, recordRateLimitAttempt, resetRateLimit } from "@/lib/rate-limit";
 
 export async function POST(req: NextRequest) {
   try {
+    const clientIp = getClientIp(req);
+    const rateLimitKey = `login_${clientIp}`;
+
+    // Throttle login attempts: Max 5 attempts per 60 seconds per IP
+    const rateLimit = checkRateLimit(rateLimitKey, 5, 60 * 1000);
+    if (!rateLimit.isAllowed) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: `Too many login attempts. Please wait ${rateLimit.retryAfterSec} seconds before trying again.`,
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(rateLimit.retryAfterSec),
+            "X-RateLimit-Limit": "5",
+            "X-RateLimit-Remaining": "0",
+          },
+        }
+      );
+    }
+
     const body = await req.json();
     const { email, password } = body;
 
@@ -21,6 +44,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (!user) {
+      recordRateLimitAttempt(rateLimitKey);
       return NextResponse.json(
         { success: false, error: "Invalid email or password." },
         { status: 401 }
@@ -29,11 +53,15 @@ export async function POST(req: NextRequest) {
 
     const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
+      recordRateLimitAttempt(rateLimitKey);
       return NextResponse.json(
         { success: false, error: "Invalid email or password." },
         { status: 401 }
       );
     }
+
+    // Reset rate limiter on successful authentication
+    resetRateLimit(rateLimitKey);
 
     const role = user.role as Role;
 

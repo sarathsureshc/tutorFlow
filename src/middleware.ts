@@ -3,8 +3,15 @@ import { jwtVerify } from "jose";
 import { COOKIE_NAME } from "@/lib/constants";
 import { Role } from "@/types";
 
-const JWT_SECRET = process.env.JWT_SECRET || "tutorflow_super_secret_production_key_2026_minimum_32_chars_long!";
-const secretKey = new TextEncoder().encode(JWT_SECRET);
+function getJwtSecretKey(): Uint8Array {
+  const secret = process.env.JWT_SECRET;
+  if (!secret || secret.length < 32) {
+    throw new Error(
+      "FATAL SECURITY ERROR: JWT_SECRET environment variable is missing or shorter than 32 characters in middleware."
+    );
+  }
+  return new TextEncoder().encode(secret);
+}
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -24,7 +31,7 @@ export async function middleware(request: NextRequest) {
 
   if (token) {
     try {
-      const { payload } = await jwtVerify(token, secretKey);
+      const { payload } = await jwtVerify(token, getJwtSecretKey());
       user = {
         sub: payload.sub as string,
         role: payload.role as Role,

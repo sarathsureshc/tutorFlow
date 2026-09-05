@@ -118,7 +118,22 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const passwordHash = await bcrypt.hash(password || "password123", 10);
+    let initialPassword = password?.trim();
+    let generatedPassword: string | null = null;
+
+    if (!initialPassword) {
+      // Generate cryptographically secure random temporary password (16 chars)
+      const randomHex = require("crypto").randomBytes(6).toString("hex");
+      initialPassword = `Tutor_${randomHex}!`;
+      generatedPassword = initialPassword;
+    } else if (initialPassword.length < 8) {
+      return NextResponse.json(
+        { success: false, error: "Student temporary password must be at least 8 characters long." },
+        { status: 400 }
+      );
+    }
+
+    const passwordHash = await bcrypt.hash(initialPassword, 10);
 
     // Transactionally create User and StudentProfile
     const result = await prisma.$transaction(async (tx) => {
@@ -157,7 +172,10 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data: result,
+      data: {
+        ...result,
+        temporaryPassword: initialPassword,
+      },
       message: "Student account created successfully.",
     });
   } catch (error: any) {
